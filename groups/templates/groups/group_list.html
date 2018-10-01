@@ -1,0 +1,72 @@
+{% extends "base.html" %}
+
+
+{% block content %}
+<div class="row mt-3">
+    <div class="col-4">
+        {% if user.is_authenticated %}
+        <h3 class="m-0">Welcome Back</h3>
+        <h4 class="mt-1"><a href="">@{{ user }}</a></h4>
+        <hr>
+        {% endif %}
+        <h3><i class="fas fa-users"></i> Groups</h3>
+        <div class="text-muted">Welcome to the Groups Page! Select a group with a shared interest.</div>
+        <a href="" class="btn btn-secondary btn-sm mt-3"><i class="fas fa-plus"></i> Create New Group</a>
+    </div>
+    <div class="col-8">
+        <div class="list-group">
+            <form class="mb-3">
+                <div class="input-group">
+                    <input type="text" class="form-control" placeholder="Search" aria-label="Recipient's username"
+                        aria-describedby="button-addon2">
+                    <div class="input-group-append">
+                        <button class="btn btn-secondary" type="button" id="button-addon2"><i class="fas fa-search"></i></button>
+                    </div>
+                </div>
+            </form>
+            {% for group in group_list %}
+            <a href="#" class="list-group-item list-group-item-action">
+                <h4 class="text-primary">{{ group.name }}</h4>
+                {% if group.description %}
+                <p class="text-muted">{{ group.description|truncatechars:195 }}</p>
+                {% else %}
+                <p class="text-muted">***No Description***</p>
+                {% endif %}
+                <div class="row">
+                    <div class="col-6">
+                        <span class="badge badge-secondary">2 <i class="far fa-comments"></i></span>
+                    </div>
+                    <div class="col-6">
+                        <span class="badge badge-secondary">2 <i class="fas fa-users"></i></span>
+                    </div>
+                </div>
+            </a>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+<hr>
+{% if is_paginated %}
+<nav aria-label="Page navigation example" id="pagination">
+    <ul class="pagination">
+        {% if page_obj.has_previous %}
+        <li class="page-item">
+            <a class="page-link" href="/?page={{ page_obj.previous_page_number }}">Previous</a>
+        </li>
+        {% endif %}
+        <li class="page-item disabled">
+            <a class="page-link">
+                <span class="page-current">
+                    Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
+                </span>
+            </a>
+        </li>
+        {% if page_obj.has_next %}
+        <li class="page-item">
+            <a class="page-link" href="/?page={{ page_obj.next_page_number }}">Next</a>
+        </li>
+        {% endif %}
+    </ul>
+</nav>
+{% endif %}
+{% endblock content %}

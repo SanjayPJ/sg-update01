@@ -1,9 +1,9 @@
 {% extends 'base.html' %}
-
+{% load crispy_forms_tags %}
 
 {% block content %}
 
-<div class="row mt-5">
+<div class="row mt-3">
     <div class="col-4">
         <h2><i class="fas fa-user-plus"></i> Sign Up</h2>
         <p class="text-muted">Sign Up today Its easy.</p>
@@ -12,12 +12,12 @@
         <div class="card p-3 mb-5">
             <form method="post">
                 {% csrf_token %}
-                {{ form.as_p }}
+                {{ form|crispy }}
                 <button type="submit" class="btn btn-secondary w-100 mt-3">Sign Up</button>
             </form>
-            <script>
+            <!-- <script>
                 $('input').addClass("form-control")
-            </script>
+            </script> -->
         </div>
     </div>
 </div>

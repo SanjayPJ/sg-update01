@@ -1,0 +1,60 @@
+{% extends "base.html" %}
+
+
+{% block content %}
+<div class="row mt-3">
+    <div class="col-8">
+        <h3><i class="far fa-comments"></i> Post Feed</h3>
+        <hr>
+        {% include 'search.html' %}
+        <ul class="list-group mb-3">
+
+            {% for post in post_list %}
+            <li class="list-group-item">
+                <p class="text-muted">{{ post.message }}</p>
+                <a href=""><b>@{{ post.user }}</b></a>
+                at <a href=""><b> {{ post.created_at }}</b></a>
+
+                {% if post.group %}
+                in <a href=""><b> {{ post.group }}</b></a>
+                {% endif %}
+
+            </li>
+            {% empty %}
+            <h2>No Posts yet.</h2>
+            {% endfor %}
+
+        </ul>
+    </div>
+    <div class="col-4">
+        {% include 'links.html' %}
+    </div>
+
+</div>
+<div class="pagi">
+    <hr>
+    {% if is_paginated %}
+    <nav aria-label="Page navigation example" id="pagination">
+        <ul class="pagination justify-content-end">
+            {% if page_obj.has_previous %}
+            <li class="page-item">
+                <a class="page-link" href="?page={{ page_obj.previous_page_number }}">Previous</a>
+            </li>
+            {% endif %}
+            <li class="page-item disabled">
+                <a class="page-link">
+                    <span class="page-current">
+                        Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
+                    </span>
+                </a>
+            </li>
+            {% if page_obj.has_next %}
+            <li class="page-item">
+                <a class="page-link" href="?page={{ page_obj.next_page_number }}">Next</a>
+            </li>
+            {% endif %}
+        </ul>
+    </nav>
+</div>
+{% endif %}
+{% endblock content %}

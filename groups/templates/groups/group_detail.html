@@ -1,0 +1,65 @@
+{% extends 'base.html' %}
+
+
+{% block content %}
+<div class="row mt-3 mb-3">
+    <div class="col-4">
+        <h2>{{ group.name }}</h2>
+        {% if group.description %}
+        <p class="text-muted">{{ group.description }}</p>
+        {% else %}
+        <p class="text-muted">***No Description***</p>
+        {% endif %}
+        <hr>
+        <h5><b>Members: {{ group.user.count }}</b></h5>
+        <span>
+            {% if request.user in group.user.all %}
+            <a href="" class="btn btn-secondary btn-sm">Leave</a>
+            {% else %}
+            <a href="" class="btn btn-secondary btn-sm">Join</a>
+            {% endif %}
+            <a href="" class="btn btn-secondary btn-sm">Edit</a>
+            <a href="" class="btn btn-danger btn-sm">Delete</a>
+        </span>
+        <hr>
+        {% include 'links.html' %}
+    </div>
+    <div class="col-8">
+
+        {% for post in all_post %}
+        <li class="list-group-item">
+            <p class="text-muted">{{ post.message }}</p>
+            <a href=""><b>@{{ post.user }}</b></a>
+            at <a href=""><b> {{ post.created_at }}</b></a>
+        </li>
+        {% empty %}
+        <h2>No Posts yet.</h2>
+        {% endfor %}
+    </div>
+</div>
+
+<div class="pagi">
+    <hr>
+    <nav aria-label="Page navigation example" id="pagination">
+        <ul class="pagination">
+            {% if all_post.has_previous %}
+            <li class="page-item">
+                <a class="page-link" href="?page={{ all_post.previous_page_number }}">Previous</a>
+            </li>
+            {% endif %}
+            <li class="page-item disabled">
+                <a class="page-link">
+                    <span class="page-current">
+                        Page {{ all_post.number }} of {{ all_post.paginator.num_pages }}.
+                    </span>
+                </a>
+            </li>
+            {% if all_post.has_next %}
+            <li class="page-item">
+                <a class="page-link" href="?page={{ all_post.next_page_number }}">Next</a>
+            </li>
+            {% endif %}
+        </ul>
+    </nav>
+</div>
+{% endblock content %}

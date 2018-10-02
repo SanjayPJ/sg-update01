@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from groups.models import Group
 from posts.models import Post
+from django.db.models import Q
 
 # Create your views here.
 
@@ -10,7 +11,8 @@ def search(request):
     if q is None:
         queryset = Group.objects.all()[:10]
     else:
-        queryset = Group.objects.filter(name__contains=q)[:10]
+        queryset = Group.objects.filter(
+            Q(name__contains=q) | Q(description__contains=q))[:10]
     if q is None:
         queryset2 = Post.objects.all()[:10]
     else:

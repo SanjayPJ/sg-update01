@@ -1,0 +1,63 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="row mt-3">
+    <div class="col-8">
+        <h3>Search Result For "<b>{{ request.GET.q }}</b>"</h3>
+        <hr>
+        <br>
+        <h3 class="text-primary"><i class="fas fa-users"></i> Groups </h3>- <span class="text-muted">Search Result for
+            "<b>{{ request.GET.q }}</b>"</span>
+        <div class="list-group mt-3">
+            {% for group in group_list %}
+            <a href="{% url 'group_detail' group.pk %}" class="list-group-item list-group-item-action">
+                <h4 class="text-primary">{{ group.name }}</h4>
+                {% if group.description %}
+                <p class="text-muted">{{ group.description|truncatechars:195 }}</p>
+                {% else %}
+                <p class="text-muted">***No Description***</p>
+                {% endif %}
+                <div class="row">
+                    <div class="col-6">
+                        <span class="badge badge-secondary"><span>{{ group.post_set.all.count }}</span> <i class="far fa-comments"></i></span>
+                    </div>
+                    <div class="col-6">
+                        <span class="badge badge-secondary"><span>{{ group.user.count }}</span> <i class="fas fa-users"></i></span>
+                    </div>
+                </div>
+            </a>
+            {% empty %}
+            <h4>Nothing Found!</h4>
+            {% endfor %}
+        </div>
+        <hr>
+        <h3 class="text-primary"><i class="far fa-comments"></i> Posts </h3>- <span class="text-muted">Search Result
+            for "<b>{{ request.GET.q }}</b>"</span>
+        <ul class="list-group mt-3">
+            {% for post in post_list %}
+            <li class="list-group-item">
+                <p class="text-muted">{{ post.message }}</p>
+                <a href=""><b>@{{ post.user }}</b></a>
+                at <a href=""><b> {{ post.created_at }}</b></a>
+
+                {% if post.group %}
+                in <a href=""><b> {{ post.group }}</b></a>
+                {% endif %}
+
+            </li>
+            {% empty %}
+            <h4>Nothing Found!</h4>
+            {% endfor %}
+
+        </ul>
+    </div>
+    <div class="col-4">
+        <h3><i class="fas fa-search"></i> Search</h3>
+        <p class="text-muted text-capitalize">Get What You Want</p>
+        {% include 'search.html' with search=request.GET.q %}
+        <hr>
+        <br>
+        {% include 'links.html' %}
+    </div>
+</div>
+{% endblock content %}

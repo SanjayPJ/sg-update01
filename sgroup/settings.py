@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'groups',
     'posts',
     'accounts',
+    'search',
 ]
 
 CRISPY_TEMPLATE_PACK = 'bootstrap4'

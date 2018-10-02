@@ -1,4 +1,4 @@
-# Social Group Update
+# Social Group
 Social Group Update
 ---
 ![alt text](screen/1.png)

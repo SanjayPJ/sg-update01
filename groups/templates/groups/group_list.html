@@ -12,7 +12,8 @@
         {% endif %}
         <h3><i class="fas fa-users"></i> Groups</h3>
         <div class="text-muted">Welcome to the Groups Page! Select a group with a shared interest.</div>
-        <a href="" class="btn btn-secondary btn-sm mt-3"><i class="fas fa-plus"></i> Create New Group</a>
+        <a href="{% url 'group_create' %}" class="btn btn-secondary btn-sm mt-3"><i class="fas fa-plus"></i> Create New
+            Group</a>
         <hr>
         <br>
         {% include 'links.html' %}

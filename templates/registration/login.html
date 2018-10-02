@@ -3,6 +3,12 @@
 
 {% block content %}
 
+{% if user.is_authenticated %}
+<script>
+    window.location.href = "{% url 'home' %}";
+</script>
+{% endif %}
+
 <div class="row mt-5">
     <div class="col-4">
         <h2><i class="fas fa-sign-in-alt"></i> Log In</h2>

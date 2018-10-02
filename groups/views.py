@@ -1,6 +1,10 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect, get_object_or_404
+from django.views.generic.edit import CreateView
 from django.views.generic.detail import DetailView
 from django.views.generic.list import ListView
+from django.views.generic.edit import DeleteView
+from django.views.generic.edit import UpdateView
+from django.urls import reverse_lazy
 from django.core.paginator import EmptyPage, PageNotAnInteger, Paginator
 
 from .models import Group
@@ -26,3 +30,30 @@ class GroupDetailView(DetailView):
         all_post = paginator.get_page(page)
         context['all_post'] = all_post
         return context
+
+
+class GroupCreateView(CreateView):
+    model = Group
+    fields = ['name', 'description', 'user']
+
+
+class GroupDeleteView(DeleteView):
+    model = Group
+    success_url = reverse_lazy('home')
+
+
+class GroupUpdateView(UpdateView):
+    model = Group
+    fields = ['name', 'description', 'user']
+
+
+def join(request, pk):
+    add_g = get_object_or_404(Group, pk=pk)
+    add_g.add_user(request.user)
+    return redirect('group_detail', pk=pk)
+
+
+def remove(request, pk):
+    add_g = get_object_or_404(Group, pk=pk)
+    add_g.remove_user(request.user)
+    return redirect('group_detail', pk=pk)

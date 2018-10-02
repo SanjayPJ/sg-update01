@@ -16,7 +16,7 @@
                 at <a href=""><b> {{ post.created_at }}</b></a>
 
                 {% if post.group %}
-                in <a href=""><b> {{ post.group }}</b></a>
+                in <a href="{% url 'group_detail' post.group.pk %}"><b> {{ post.group }}</b></a>
                 {% endif %}
 
             </li>

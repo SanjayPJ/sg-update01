@@ -17,5 +17,10 @@ from django.urls import path, include
 from . import views
 
 urlpatterns = [
-    path('detail/<int:pk>/', views.GroupDetailView.as_view(), name='group_detail')
+    path('detail/<int:pk>/', views.GroupDetailView.as_view(), name='group_detail'),
+    path('create/', views.GroupCreateView.as_view(), name='group_create'),
+    path('delete/<int:pk>/', views.GroupDeleteView.as_view(), name='group_delete'),
+    path('update/<int:pk>/', views.GroupUpdateView.as_view(), name='group_update'),
+    path('join/<int:pk>/', views.join, name='join'),
+    path('remove/<int:pk>/', views.remove, name='remove'),
 ]

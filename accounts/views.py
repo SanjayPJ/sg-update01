@@ -3,6 +3,7 @@ from django.shortcuts import render, redirect
 from django.views.generic.list import ListView
 from django.contrib.auth import get_user_model
 from django.shortcuts import get_object_or_404
+from django.core.paginator import EmptyPage, PageNotAnInteger, Paginator
 
 User = get_user_model()
 
@@ -29,7 +30,10 @@ def signup(request):
 
 def post_user_view(request, pk):
     user = get_object_or_404(User, pk=pk)
-    post_list = Post.objects.filter(user__in=[user])
+    post_lists = Post.objects.filter(user__in=[user])
+    paginator = Paginator(post_lists, 10)
+    page = request.GET.get('page')
+    post_list = paginator.get_page(page)
     context = {
         'post_list': post_list,
         'author': user,

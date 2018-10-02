@@ -18,4 +18,5 @@ from . import views
 
 urlpatterns = [
     path('signup/', views.signup, name='signup'),
+    path('users/<int:pk>', views.post_user_view, name='post_user')
 ]

@@ -6,7 +6,7 @@
     <div class="col-4">
         {% if user.is_authenticated %}
         <h2 class="m-0">Welcome Back</h2>
-        <h4 class="mt-1"><a href="">@{{ user }}</a></h4>
+        <h4 class="mt-1"><a href="{% url 'post_user' user.pk %}">@{{ user }}</a></h4>
         <hr>
         <br>
         {% endif %}

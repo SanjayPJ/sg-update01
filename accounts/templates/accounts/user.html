@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+
+
+{% block content %}
+<div class="row my-3">
+    <div class="col-4">
+        <h2>Post History</h2>
+        <h4 class="text-primary">@{{ author }}</h4>
+        <hr>
+        <br>
+        {% include 'links.html' %}
+    </div>
+    <div class="col-8">
+        <ul class="list-group mb-3">
+            {% for post in post_list %}
+            <li class="list-group-item">
+                <p class="text-muted">{{ post.message }}</p>
+                <a href=""><b> {{ post.created_at }}</b></a>
+
+                {% if post.group %}
+                in <a href="{% url 'group_detail' post.group.pk %}"><b> {{ post.group }}</b></a>
+                {% endif %}
+            </li>
+            {% empty %}
+            <h2>No Posts yet.</h2>
+            {% endfor %}
+        </ul>
+    </div>
+</div>
+
+{% endblock content %}

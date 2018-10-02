@@ -31,7 +31,7 @@
         {% for post in all_post %}
         <li class="list-group-item">
             <p class="text-muted">{{ post.message }}</p>
-            <a href=""><b>@{{ post.user }}</b></a>
+            <a href="{% url 'post_user' post.user.pk %}"><b>@{{ post.user }}</b></a>
             at <a href=""><b> {{ post.created_at }}</b></a>
         </li>
         {% empty %}

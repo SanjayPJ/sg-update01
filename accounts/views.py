@@ -1,7 +1,13 @@
 from django.contrib.auth import login, authenticate
 from django.shortcuts import render, redirect
+from django.views.generic.list import ListView
+from django.contrib.auth import get_user_model
+from django.shortcuts import get_object_or_404
+
+User = get_user_model()
 
 from .forms import SignUpForm
+from posts.models import Post
 
 # Create your views here.
 
@@ -19,3 +25,13 @@ def signup(request):
     else:
         form = SignUpForm()
     return render(request, 'registration/signup.html', {'form': form})
+
+
+def post_user_view(request, pk):
+    user = get_object_or_404(User, pk=pk)
+    post_list = Post.objects.filter(user__in=[user])
+    context = {
+        'post_list': post_list,
+        'author': user,
+    }
+    return render(request, 'accounts/user.html', context)
